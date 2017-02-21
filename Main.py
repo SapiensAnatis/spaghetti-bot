@@ -20,7 +20,7 @@ async def on_ready():
             print("\tLoading of module {0} completed.".format(extension_file))
     print("Extension loading complete.\n")
 
-if __name__ == "__main__": # if we doing this shit fo real this time
+if __name__ == "__main__": # if we're ready to go
     with open ("key.txt", "r") as key_file:
         key = key_file.read()
 
