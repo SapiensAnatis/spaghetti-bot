@@ -21,4 +21,4 @@ async def on_ready():
     print("Extension loading complete.\n")
 
 if __name__ == "__main__": # if we doing this shit fo real this time
-    bot.run(r"MjgzMzM5MTAwOTY1MTc1Mjk3.C4zoSQ.ZFlXQrrnKY1r0YGefEkTHp9b5HM")
+    bot.run(r"redacted")
