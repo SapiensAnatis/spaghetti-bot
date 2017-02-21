@@ -59,7 +59,7 @@ class Colors():
 
         color_argument = color_argument_raw.replace("#", "")  # remove hash; the int(hex, 16) method dislikes hashes
 
-        print("[Colors.py on server {server.name}] User {author.name} has requested a colour change to #{color_argument}.")
+        print("f[Colors.py on server {server.name}] User {author.name} has requested a colour change to #{color_argument}.")
         # Ensure validity of hex code
         if len(color_argument) != 6:  # Potentially invalid (alpha channels are obviously not supported)
             await self.bot.send_message("Please provide a valid hex code.", ctx.message.channel)
@@ -83,10 +83,10 @@ class Colors():
         # Now, apply the new role. First, check if the role already exists
         result = discord.utils.find(lambda role: role.name == f"[#{color_argument}])", server.roles)
         if result is not None:
-            print(f"\t\t* Provided colour change to {color_argument} for {author.name} using pre-existing role.")
+            print(f"\t\t* Provided colour change to {color_argument} for user {author.name} using pre-existing role.")
             await self.bot.add_roles(author, result)
         else:
-            print(f"\t\t* Cannot provide colour change to hex {color_argument} for {author.name} using existing roles. "
+            print(f"\t\t* Cannot provide colour change to hex {color_argument} for user {author.name} using existing roles. "
                   f"Creating new role for them...")
 
             color_int = int(color_argument,
