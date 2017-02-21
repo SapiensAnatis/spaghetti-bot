@@ -91,3 +91,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+modules/__pycache__/Colors.cpython-36.pyc
