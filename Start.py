@@ -15,9 +15,9 @@ async def on_ready():
     print("Loading submodules:")
     for extension_file in listdir("modules"):
         if extension_file.endswith(".py"):
-            print("\tLoading {0}...".format(extension_file), end="")
+            print("  Loading {0}...".format(extension_file), end="")
             bot.load_extension("modules." + extension_file[:-3])  # try and load module from filename (sans extension)
-            print("\tLoading of module {0} completed.".format(extension_file))
+            print("  Loading of module {0} completed.".format(extension_file))
     print("Extension loading complete.\n")
 
 if __name__ == "__main__": # if we're ready to go
