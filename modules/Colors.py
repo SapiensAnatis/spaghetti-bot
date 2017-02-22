@@ -27,9 +27,12 @@ class Colors:
 
     async def start_background_clean(self):
         await self.bot.wait_until_ready()
+        # Clean duplicate and unused roles
         while True:
             print("[Colors.py] Cleaning up unused & duplicate colour roles...")
-            count = 0
+            deleted_roles = 0
+            removed_roles = 0
+
             for server in self.bot.servers:
                 roles = [] # Start collecting role names to identify dupes
                 for role in server.roles:
@@ -37,15 +40,42 @@ class Colors:
                         if not role_has_users(role):
                             print(f"  * L O C A T E D redundant role {role} in server {server}. Deleting...")
                             await self.bot.delete_role(server, role)
-                            count += 1
+                            deleted_roles += 1
                         if role.name in roles:
                             print(f"  * L O C A T E D duplicate role {role} in server {server}. Deleting...")
                             await self.bot.delete_role(server, role)
-                            count += 1
+                            deleted_roles += 1
 
                         roles.append(role.name)
-            print(f"[Colors.py] Finished cleaning up colour roles; {count} roles deleted.")
-            await sleep(cleanup_delay) # async sleep shouldn't slow down the program, hence a while loop is appropriate
+
+                # Find users with duplicate roles and delete the second role
+
+                for member in server.members:
+                    their_role = None
+                    for role in member.roles:
+                        if role.name.startswith("[#"):
+                            if their_role is not None: # if they already have a role
+                                print(f"  * L O C A T E D user {member.name} in server {server.name} with second colour role {role.name}. Removing...")
+                                await self.bot.remove_roles(member, role)
+                                removed_roles += 1
+
+                                # Because we'll soon be checking for redundancy, we need to do that hack again to ensure
+                                # roles are actually seen as redundant (fully deleted) before impending cleanup
+
+                                await sleep(1)
+                                # now check if that role is redundant:
+                                if not role_has_users(role):
+                                    print("   * Additionally, this role no longer has users. Deleting...")
+                                    await self.bot.delete_role(server, role)
+                                    deleted_roles += 1
+                            else:
+                                their_role = role
+
+
+
+            print(f"[Colors.py] Finished cleaning up redundant colour roles; {deleted_roles} roles deleted and {removed_roles} removed from users.")
+            await sleep(cleanup_delay)  # async sleep shouldn't slow down the program, hence a while loop is appropriate
+
 
     @commands.command(pass_context=True, aliases=['colour'])
     async def color(self, ctx, color_argument_raw: str):  # color is a hex code or should be...
@@ -58,7 +88,7 @@ class Colors:
 
         color_argument = color_argument_raw.replace("#", "")  # remove hash; the int(hex, 16) method dislikes hashes
 
-        print("f[Colors.py on server {server.name}] User {author.name} has requested colour #{color_argument}.")
+        print(f"[Colors.py on server {server.name}] User {author.name} has requested colour #{color_argument}.")
         # Ensure validity of hex code
         if len(color_argument) != 6:  # Potentially invalid (alpha channels are obviously not supported)
             await self.bot.send_message("Please provide a valid hex code.", ctx.message.channel)
@@ -66,17 +96,18 @@ class Colors:
         print("  * The user's input was validated successfully. Removing existing roles...")
 
         # Find a user's existing colour role if applicable
-        old_role = discord.utils.find(lambda role: role.name.startswith("[#"), author.roles)
+        old_roles = [x for x in author.roles if x.name.startswith("[#")]
 
-        if old_role is not None:  # if one was found
-            print(f"    * Found existing colour role {old_role.name} - removing...")
-            await self.bot.remove_roles(author, old_role)
-            await sleep(0.2)  # dirty hack to make sure delete actually goes through before we check for disuse
-            print("    * Removed role, checking if still in use...")
-            # If that role is now empty, remove it entirely:
-            if not role_has_users(old_role):  # if there is nobody with the role
-                print("    * Existing colour role was now empty, deleting...")
-                await self.bot.delete_role(server, old_role)
+        for old_role in old_roles:
+            if old_role is not None:  # if one was found
+                print(f"    * Found existing colour role {old_role.name} - removing...")
+                await self.bot.remove_roles(author, old_role)
+                await sleep(1)  # dirty hack to make sure delete actually goes through before we check for disuse
+                print("    * Removed role, checking if still in use...")
+                # If that role is now empty, remove it entirely:
+                if not role_has_users(old_role):  # if there is nobody with the role
+                    print("    * Existing colour role was now empty, deleting...")
+                    await self.bot.delete_role(server, old_role)
 
         print("  * Existing roles successfully cleaned. Applying and possibly creating new role...")
         # Now, apply the new role. First, check if the role already exists
