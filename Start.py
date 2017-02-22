@@ -4,14 +4,22 @@ print("Attempting to import discord.ext & other required modules...", end="")
 from discord.ext import commands
 from os import listdir
 
-print("done!\nMaking session...", end="")
-bot = commands.Bot(command_prefix="$", description="Wtf")
-print("done!\nLogging in...", end="")
+try:
+    from colorama import Fore
+except:
+    Fore.GREEN = ""
+    Fore.RESET = "" # Define fallbacks
 
+print("done!")
+print("Creating bot object...", end="")
+bot = commands.Bot(command_prefix="$", description="Wtf")
+print("done!")
+print("Logging in...", end="")
 
 @bot.event
 async def on_ready():
-    print("done!\n\nLogged into Discord bot account {0}#{1}.".format(bot.user.name, bot.user.discriminator))
+    print("done!")
+    print(Fore.GREEN + f"\nLogged into Discord bot account {bot.user.name}#{bot.user.discriminator}.", Fore.RESET)
     print("Loading submodules:")
     for extension_file in listdir("modules"):
         if extension_file.endswith(".py"):
