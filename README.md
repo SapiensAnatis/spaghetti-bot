@@ -2,14 +2,19 @@
 Using discord.py I think I've made a nifty bot. The extensions to this library have also allowed me to make it fully modular - follow the example in the existing module file (Colors.py) to make your own modules.
 
 # Dependancies
-Requires discord.py, Python >= 3.6.
+Requires discord.py, Python >= 3.6. Also makes use of colorama, though this is not explicitly required.
+To use search commands, you'll need a Google Search API key.
 # 'Installation'
 You will need to create a Discord bot account and supply your key (not your client ID or secret) in key.txt. This file should be placed in the same directory as main.py. There are many guides to doing this on the internet.
 Again refer to the Internet, this time for how to add your new bot to your server. Run the script and if you did everything right, the bot will come online and respond to commands. The bot must be given at least the Manage Roles permission, and its role must be placed quite high to avoid permission errors. Overall, I would recommend that you just give it administrator privileges to avoid issues like this; you can see the source code and you know it's not doing anything harmful nor does it auto-update.
 # Usage
-In this repo, the command prefix is '$' and the only command is '$color' or its alias '$colour'. This takes one argument, a single 6-digit (RRGGBB) hex colour code (hash or not doesn't matter) and changes your name in the Discord server to the specified colour.
+Commands:
 
-Example usage: `$colour #ff0000` changes your name to be red.
+- $color \<hex\> - changes name colour to hex code. Example: `$colour #ff0000` changes your name to be red.
+- $cointoss - self-explanatory, flips a coin and states the result
+- $8ball - prints a random 8-ball phase. Add a slanderous statement after for more fun.
+- $die/dice \<x> - rolls a die of *x* sides. Even supports decimals for some reason.
+- $search \<query\> \<y\> - Initiates a google search for 'query', displaying 'y' results.
 
 # License
 
