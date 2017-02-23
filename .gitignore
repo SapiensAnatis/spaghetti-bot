@@ -95,3 +95,5 @@ modules/__pycache__/Colors.cpython-36.pyc
 __pycache__/importer.cpython-36.pyc
 key.txt
 *.pyc
+.google-cookie
+modules/SearchAPIKey.txt
