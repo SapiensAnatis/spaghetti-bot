@@ -1,4 +1,4 @@
-print("\n  [Colors.py] Importing discord & other modules...", end="")
+print("\n   [Colors.py] Importing discord & other modules...", end="")
 import discord
 from discord.ext import commands
 from asyncio import sleep
@@ -11,7 +11,7 @@ except ImportError:
     Fore.MAGENTA = ""
     Fore.RESET = "" # Define fallback so that we don't get errors when colouring messages
 
-cleanup_delay = 3000  # seconds
+cleanup_delay = 300  # seconds
 print("done!")
 
 
@@ -28,7 +28,7 @@ def role_has_users(role):
 
 class Colors:
     def __init__(self, bot):
-        print("  [Colors.py] Initializing...", end="")
+        print("   [Colors.py] Initializing...", end="")
         self.bot = bot  # there used to be more code here...hence the print statements
         print("done!")
 
@@ -86,7 +86,11 @@ class Colors:
 
 
             print(f"[Colors.py] Finished cleaning up redundant colour roles; {deleted_roles} roles deleted and {removed_roles} removed from users.", Fore.RESET)
-            await sleep(cleanup_delay)  # async sleep shouldn't slow down the program, hence a while loop is appropriate
+            slept = 0
+            while slept < cleanup_delay:
+                slept += 1
+                # print("Slept for", slept)
+                await sleep(1)
 
     # Main command response method
     @commands.command(pass_context=True, aliases=['colour'])
@@ -117,13 +121,12 @@ class Colors:
         old_roles = [x for x in author.roles if x.name.startswith("[#")]
 
         for old_role in old_roles:
-            if old_role is not None:  # if one was found
-                print(f"    * Found existing colour role {old_role.name} - removing...")
-                await self.bot.remove_roles(author, old_role)
-                await sleep(1)  # dirty hack to make sure delete actually goes through before we check for disuse
-                print("    * Removed role, checking if still in use...")
-                # If that role is now empty, remove it entirely:
-                await self.delete_role_if_empty(old_role)
+            print(f"    * Found existing colour role {old_role.name} - removing...")
+            await self.bot.remove_roles(author, old_role)
+            await sleep(1)  # dirty hack to make sure delete actually goes through before we check for disuse
+            print("    * Removed role, checking if still in use...")
+            # If that role is now empty, remove it entirely:
+            await self.delete_role_if_empty(old_role)
 
         print("  * Existing roles successfully cleaned. Applying and possibly creating new role...")
         # Now, apply the new role. First, check if the role already exists

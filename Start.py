@@ -31,5 +31,4 @@ async def on_ready():
 if __name__ == "__main__": # if we're ready to go
     with open ("key.txt", "r") as key_file:
         key = key_file.read()
-
     bot.run(key)

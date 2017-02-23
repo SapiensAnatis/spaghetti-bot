@@ -1,4 +1,4 @@
-print("\n  [RNG.py] Importing required modules...", end="")
+print("\n   [RNG.py] Importing required modules...", end="")
 import random
 try: import inflect; inflect_imported = True
 except: pass
@@ -9,7 +9,7 @@ print("done!")
 
 class RNG:
     def __init__(self, bot):
-        print("  [RNG.py] Initializing...", end="")
+        print("   [RNG.py] Initializing...", end="")
         self.bot = bot
         self.eightballresults = ["It is certain",
                             "It is decidedly so",
