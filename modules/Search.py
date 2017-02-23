@@ -47,7 +47,7 @@ class Search:
             async with client.get(search_url) as q:
                 # Get results from webrequest
                 print("[Search.py] Grabbing data from", search_url)
-                print("[Search].py] Received request status", q.status)
+                print("[Search.py] Received request status", q.status)
                 if q.status > 300: # probably failed idk lol im not a webmaster
                     await self.bot.edit_message(search_message, new_content=f"Search failed. Web request failed with status {q.status}.")
                     print(await q.text())
