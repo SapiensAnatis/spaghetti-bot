@@ -36,7 +36,7 @@ class Search:
         return url
 
     @commands.command(pass_context = True)
-    async def search(self, ctx, query : str, count : int = 5):
+    async def search(self, ctx, query : str, count : int = 1):
         # Rule out horseplay (input validation)
         start = time.time()
         print(f"{tag(start)} Received command query. Validating...")
