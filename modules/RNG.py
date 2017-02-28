@@ -1,4 +1,4 @@
-print("\n   [RNG.py] Importing required modules...", end="")
+print("   [RNG.py] Importing required modules...", end="")
 import random
 try: import inflect; inflect_imported = True
 except: pass

@@ -1,4 +1,4 @@
-print("\n   [Colors.py] Importing discord & other modules...", end="")
+print("   [Colors.py] Importing discord & other modules...", end="")
 import discord
 from discord.ext import commands
 from asyncio import sleep
@@ -11,7 +11,7 @@ except ImportError:
     Fore.MAGENTA = ""
     Fore.RESET = "" # Define fallback so that we don't get errors when colouring messages
 
-cleanup_delay = 300  # seconds
+cleanup_delay = 1200  # seconds
 print("done!")
 
 
