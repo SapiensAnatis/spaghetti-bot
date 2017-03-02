@@ -6,11 +6,8 @@ from random import choice
 import json
 import aiohttp
 import time
-<<<<<<< HEAD
 import modules.utils as utils
-=======
-import utils
->>>>>>> f5f7e4ad017a73025e676524e34cd842c565df9d
+
 
 def time_since(ref):
 	return int(1000*(time.time() - ref))
