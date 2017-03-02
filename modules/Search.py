@@ -27,7 +27,7 @@ class Search:
 
         print("   [Search.py] Locating API key in SearchAPIKey.txt...",end="")
         with open(utils.local_filepath("SearchAPIKey.txt"), "r") as file_in:
-            self.api_key = file_in.read()
+            self.api_key = file_in.readlines()[0]
             print(f"done!")
 
 
