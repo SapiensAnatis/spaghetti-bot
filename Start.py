@@ -30,10 +30,18 @@ async def on_ready():
     print("done!")
     print(Fore.GREEN + f"\nLogged into Discord bot account {bot.user.name}#{bot.user.discriminator}.", Fore.RESET)
     print("Loading submodules:")
+<<<<<<< HEAD
     for extension in extensions:
         print(f"  Loading {extension}...")
         bot.load_extension("modules." + extension)
         print(f"  Loading of module {extension} completed.")
+=======
+    for extension_file in listdir(utils.local_filepath("modules")):
+        if extension_file.endswith(".py") and extension_file != "utils.py":
+            print("  Loading {0}...".format(extension_file), end="")
+            bot.load_extension("modules." + extension_file[:-3])  # try and load module from filename (sans extension)
+            print("  Loading of module {0} completed.".format(extension_file))
+>>>>>>> f5f7e4ad017a73025e676524e34cd842c565df9d
     print("Extension loading complete.\n")
 
 @bot.command(aliases=['reload', 'restart'], pass_context=True)

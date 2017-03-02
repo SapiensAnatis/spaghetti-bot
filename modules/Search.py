@@ -6,7 +6,11 @@ from random import choice
 import json
 import aiohttp
 import time
+<<<<<<< HEAD
 import modules.utils as utils
+=======
+import utils
+>>>>>>> f5f7e4ad017a73025e676524e34cd842c565df9d
 
 def time_since(ref):
 	return int(1000*(time.time() - ref))
@@ -36,7 +40,7 @@ class Search:
         return url
 
     @commands.command(pass_context = True)
-    async def search(self, ctx, query : str, count : int = 5):
+    async def search(self, ctx, query : str, count : int = 1):
         # Rule out horseplay (input validation)
         start = time.time()
         print(f"{tag(start)} Received command query. Validating...")

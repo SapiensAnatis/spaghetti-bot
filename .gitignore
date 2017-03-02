@@ -97,3 +97,4 @@ key.txt
 *.pyc
 .google-cookie
 modules/SearchAPIKey.txt
+SearchAPIKey.txt
