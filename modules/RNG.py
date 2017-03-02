@@ -1,4 +1,4 @@
-print("\n   [RNG.py] Importing required modules...", end="")
+print("   [RNG.py] Importing required modules...", end="")
 import random
 try: import inflect; inflect_imported = True
 except: pass
@@ -57,7 +57,7 @@ class RNG:
         if ctx.message.author == ctx.message.server.me: return
 
         if sides > 1337 or sides <= 0:
-            await self.bot.send_message(ctx.message.channel, ":unamused:")
+            await self.bot.add_reaction(ctx.message, "😒")
             return
 
         print(f"[RNG.py] User {ctx.message.author.name} has rolled a {sides}-sided die.")

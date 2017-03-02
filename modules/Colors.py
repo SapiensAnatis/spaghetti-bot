@@ -1,4 +1,4 @@
-print("\n   [Colors.py] Importing discord & other modules...", end="")
+print("   [Colors.py] Importing discord & other modules...", end="")
 import discord
 from discord.ext import commands
 from asyncio import sleep
@@ -11,7 +11,7 @@ except ImportError:
     Fore.MAGENTA = ""
     Fore.RESET = "" # Define fallback so that we don't get errors when colouring messages
 
-cleanup_delay = 300  # seconds
+cleanup_delay = 1200  # seconds
 print("done!")
 
 
@@ -110,7 +110,7 @@ class Colors:
 
         print(f"[Colors.py on server {server.name}] User {author.name} has requested colour #{color_argument}.")
         # Ensure validity of hex code
-        if not compile("^[0-9a-f]{6,6}").match(color_argument):  # This regex checks if the string is hex (only six characters, only valid hex digits
+        if not compile("^[0-9a-f]{6,6}").match(color_argument):  # This regex checks if the string is hex (only six characters, only valid hex digits)
             print(f"Attempting callback in channel {ctx.message.channel}")
             await self.bot.send_message(ctx.message.channel, "Please provide a valid hex code. (6 digits excluding hash)")
             return
