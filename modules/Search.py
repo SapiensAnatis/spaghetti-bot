@@ -47,7 +47,7 @@ class Search:
             await self.bot.add_reaction(ctx.message, "😒")
             return
 
-        print(f"{tag(start)} Input validated successfully. User {ctx.message.author.name} has made a search with query {query}. \n{tag(start)} Sending search message:")
+        print(f"{tag(start)} Input validated successfully. User {ctx.message.author.name} has made a search with query '{query}'. \n{tag(start)} Sending search message:")
         search_message = await self.bot.send_message(ctx.message.channel, "Searching...")
 
         query_formatted = query.replace(" ", "+")
@@ -61,7 +61,7 @@ class Search:
             print(f"{tag(start)} aiohttp client defined. Requesting...")
             async with client.get(search_url) as q:
                 # Get results from webrequest
-                print(f"{tag(start)} Data grabbed from", search_url)
+                print(f"{tag(start)} Data grabbed from", search_url.replace(self.api_key, "API_KEY_REDACTED"))
                 print(f"{tag(start)} Received request status", q.status)
                 if q.status > 300: # probably failed idk lol im not a webmaster
                     await self.bot.edit_message(search_message, new_content=f"Search failed. Web request failed with status {q.status}.")

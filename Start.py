@@ -6,12 +6,6 @@ from os import listdir, path
 import modules.utils as utils
 #print("Script path", utils.get_script_dir())
 
-try:
-    from colorama import Fore
-except:
-    Fore.GREEN = ""
-    Fore.RESET = "" # Define fallbacks
-
 print("done!")
 
 print("Performing pre-login tasks...", end="")
@@ -28,7 +22,7 @@ print("Logging in...", end="")
 @bot.event
 async def on_ready():
     print("done!")
-    print(Fore.GREEN + f"\nLogged into Discord bot account {bot.user.name}#{bot.user.discriminator}.", Fore.RESET)
+    print(f"\nLogged into Discord bot account {bot.user.name}#{bot.user.discriminator}.")
     print("Loading submodules:")
     for extension in extensions:
         print(f"  Loading {extension}...")
@@ -56,9 +50,10 @@ async def _reload(ctx, *, extension_arg: str = None):
     else:
         extension_arg = extension_arg.title() # All modules are in titlecase and the user may not provide the name like that
         if not (extension_arg in extensions):
+            print(f"Couldn't find module {extension_arg}")
             await bot.add_reaction(ctx.message, "😒")
         else:
-            print("Received call to reload module {extension_arg}.")
+            print(f"Received call to reload module {extension_arg}.")
             print(f"Reloading {extension_arg}...")
             bot.unload_extension("modules."+extension_arg)
             bot.load_extension("modules."+extension_arg)

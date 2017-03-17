@@ -98,3 +98,6 @@ key.txt
 .google-cookie
 modules/SearchAPIKey.txt
 SearchAPIKey.txt
+*.csv
+.vscode/settings.json
+.vscode/*

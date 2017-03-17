@@ -4,13 +4,6 @@ from discord.ext import commands
 from asyncio import sleep
 from re import compile
 
-try:
-    from colorama import Fore
-except ImportError:
-    Fore.RED = ""
-    Fore.MAGENTA = ""
-    Fore.RESET = "" # Define fallback so that we don't get errors when colouring messages
-
 cleanup_delay = 1200  # seconds
 print("done!")
 
@@ -21,8 +14,8 @@ def role_has_users(role):
     #   print(f"[debug][Colors.py] Role search complete for role {role.name}: found users {people_with_role}")
         return bool(people_with_role)
     else:
-        print(Fore.RED, f"[warn][Colors.py] Attempted to check role_has_users status of role {role.name}! "
-                    f"This role is not owned by this script! It is recommended that you remove this call.", Fore.RESET)
+        print(f"[warn][Colors.py] Attempted to check role_has_users status of role {role.name}! "
+                    f"This role is not owned by this script! It is recommended that you remove this call.")
         return True
 
 
@@ -44,7 +37,7 @@ class Colors:
         await self.bot.wait_until_ready()
         # Clean duplicate and unused roles
         while True:
-            print(Fore.MAGENTA + "[Colors.py] Cleaning up unused & duplicate colour roles...")
+            print("[Colors.py] Cleaning up unused & duplicate colour roles...")
             deleted_roles = 0
             removed_roles = 0
 
@@ -60,6 +53,7 @@ class Colors:
                             print(f"  * L O C A T E D duplicate role {role} in server {server}. Deleting...")
                             await self.bot.delete_role(server, role)
                             deleted_roles += 1
+
 
                         roles.append(role.name)
 
@@ -85,7 +79,7 @@ class Colors:
 
 
 
-            print(f"[Colors.py] Finished cleaning up redundant colour roles; {deleted_roles} roles deleted and {removed_roles} removed from users.", Fore.RESET)
+            print(f"[Colors.py] Finished cleaning up redundant colour roles; {deleted_roles} roles deleted and {removed_roles} removed from users.")
             slept = 0
             while slept < cleanup_delay:
                 slept += 1
@@ -99,7 +93,6 @@ class Colors:
         server = ctx.message.server
         author = ctx.message.author
 
-        print(Fore.RESET)
         if author == self.bot.user:  # No skynet today
             return
 
@@ -113,6 +106,10 @@ class Colors:
         if not compile("^[0-9a-f]{6,6}").match(color_argument):  # This regex checks if the string is hex (only six characters, only valid hex digits)
             print(f"Attempting callback in channel {ctx.message.channel}")
             await self.bot.send_message(ctx.message.channel, "Please provide a valid hex code. (6 digits excluding hash)")
+            return
+        
+        if color_argument in [role.name for role in author.roles]:
+            print("  * User already has colour that they requested.")
             return
 
         print("  * The user's input was validated successfully. Removing existing roles...")
